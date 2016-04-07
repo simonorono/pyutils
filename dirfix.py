@@ -23,18 +23,19 @@ import os
 from random import shuffle
 
 if __name__ == '__main__':
-    directory = '.dirfix'
+    directory_name = '.dirfix'
 
     parser = argparse.ArgumentParser(description="Directory structure fixer")
     parser.add_argument('-order', type=str, default='date',
                         help="Specify order (random, date [default])")
     args = parser.parse_args()
 
+    # Files without directories and hidden files
     file_list = [x for x in os.listdir()
                  if not os.path.isdir(x) and
                  not x.startswith('.')]
 
-    os.makedirs(directory)
+    os.makedirs(directory_name)
 
     if len(args.order) > 0:
         if args.order == 'random':
@@ -51,11 +52,11 @@ if __name__ == '__main__':
 
     for f in file_list:
         nname = ''.join((str(n).zfill(digits), os.path.splitext(f)[1]))
-        os.rename(f, os.path.join(directory, nname))
+        os.rename(f, os.path.join(directory_name, nname))
         new_names.append(nname)
         n += 1
 
     for f in new_names:
-        os.rename(os.path.join(directory, f), f)
+        os.rename(os.path.join(directory_name, f), f)
 
-    os.removedirs(directory)
+    os.removedirs(directory_name)
