@@ -1,4 +1,5 @@
 #!/bin/env python
+#
 # Copyright 2016 Simón Oroño
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,17 +13,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#
 """
 Utility to rename files as a secuence of numbers with trailing zeros
 """
 
 import argparse
 import os
-
 from random import shuffle
 
-if __name__ == '__main__':
+
+def main():
     directory_name = '.dirfix'
 
     parser = argparse.ArgumentParser(description="Directory structure fixer")
@@ -30,33 +31,35 @@ if __name__ == '__main__':
                         help="Specify order (random, date [default])")
     args = parser.parse_args()
 
-    # Files without directories and hidden files
-    file_list = [x for x in os.listdir()
-                 if not os.path.isdir(x) and
+    # Non-hidden files without directories
+    file_list = [x for x in os.listdir() if
+                 not os.path.isdir(x) and
                  not x.startswith('.')]
 
     os.makedirs(directory_name)
 
-    if len(args.order) > 0:
-        if args.order == 'random':
-            shuffle(file_list)
-        elif args.order == 'date':
-            file_list.sort(key=os.path.getmtime)
+    if args.order == 'random':
+        shuffle(file_list)
+    elif args.order == 'date':
+        file_list.sort(key=os.path.getmtime)
 
     digits = len(str(len(file_list)))
     if digits < 3:
         digits = 3
 
     new_names = []
-    n = 1
+    index = 1
 
-    for f in file_list:
-        nname = ''.join((str(n).zfill(digits), os.path.splitext(f)[1]))
-        os.rename(f, os.path.join(directory_name, nname))
+    for file in file_list:
+        nname = ''.join((str(index).zfill(digits), os.path.splitext(file)[1]))
+        os.rename(file, os.path.join(directory_name, nname))
         new_names.append(nname)
-        n += 1
+        index += 1
 
-    for f in new_names:
-        os.rename(os.path.join(directory_name, f), f)
+    for file in new_names:
+        os.rename(os.path.join(directory_name, file), file)
 
     os.removedirs(directory_name)
+
+if __name__ == '__main__':
+    main()
