@@ -23,6 +23,13 @@ import os
 from random import shuffle
 
 
+def get_files():
+    """Non-hidden files without directories"""
+    file_list = [x for x in os.listdir() if
+                 not os.path.isdir(x) and
+                 not x.startswith('.')]
+    return file_list
+
 def main():
     directory_name = '.dirfix'
 
@@ -31,10 +38,7 @@ def main():
                         help="Specify order (random, date [default])")
     args = parser.parse_args()
 
-    # Non-hidden files without directories
-    file_list = [x for x in os.listdir() if
-                 not os.path.isdir(x) and
-                 not x.startswith('.')]
+    file_list = get_files()
 
     os.makedirs(directory_name)
 
