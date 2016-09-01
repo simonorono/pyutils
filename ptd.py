@@ -40,7 +40,7 @@ if __name__ == '__main__':
     parser.add_argument('url', help='The base URL')
     parser.add_argument('count', help='The number of files', type=int)
     parser.add_argument('ext', help='The files extension')
-    parser.add_argument('-lz', '--leadingzeros', type=int, default=0,
+    parser.add_argument('-p', '--padding', type=int, default=0,
                         help='The number of leading zeros in the name')
     parser.add_argument('-0', '--zeroindexed', help='start counting from 0',
                         action='store_true')
@@ -51,7 +51,7 @@ if __name__ == '__main__':
     if args.output != '':
         os.makedirs(args.output, exist_ok=True)
 
-    lz = args.leadingzeros
+    lz = args.padding
 
     if args.zeroindexed:
         start = 0
