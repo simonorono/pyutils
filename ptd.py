@@ -42,7 +42,8 @@ if __name__ == '__main__':
     parser.add_argument('ext', help='The files extension')
     parser.add_argument('-p', '--padding', type=int, default=0,
                         help='The number of leading zeros in the name')
-    parser.add_argument('-0', '--zeroindexed', help='start counting from 0',
+    parser.add_argument('-z', '--zeroindexed',
+                        help='Specify if the name count starts with 0',
                         action='store_true')
     parser.add_argument('-o', '--output', default='',
                         help='directory to store the files')
