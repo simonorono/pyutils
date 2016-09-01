@@ -38,6 +38,10 @@ def main():
 
     os.makedirs(directory_name)
 
+    if args.order not in ('random', 'date'):
+        print('`{}` order not found, `date` will be used'.format(args.order))
+        args.order = 'date'
+
     if args.order == 'random':
         shuffle(file_list)
     elif args.order == 'date':
